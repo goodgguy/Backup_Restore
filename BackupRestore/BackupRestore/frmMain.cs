@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,7 +80,8 @@ namespace BackupRestore
 
         private void barCreateDevice_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            String strfullPathDivice = Program.strDefaultPath + "/" + devicename + ".bak";
+            String strfullPathDivice = Program.strDefaultPath +"/"+Program.servername+ "/" + devicename + ".bak";
+            Directory.CreateDirectory(Program.strDefaultPath + "/" + Program.servername);
             String query = "DECLARE @result int "+
                 "EXEC @result= sp_addumpdevice 'disk',@p1,@p2 "+
                 "SELECT 'result'=@result";
@@ -177,8 +179,8 @@ namespace BackupRestore
                 DateTime ThoiDiemStop = datePickerDay.Value.Date + datePickerTime.Value.TimeOfDay;
                 String strThoiDiemStop = datePickerDay.Value.ToString("yyyy-MM-dd")+" "+datePickerTime.Value.ToString("HH:mm:ss");
                 //MessageBox.Show(strThoiDiemStop, "Nofication", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                String logPath = Program.strDefaultPath + "/" + database + ".trn";
-                String logDatabase = Program.strDefaultPath + "/" + devicename + ".bak";
+                String logPath = Program.strDefaultPath +"/"+Program.servername+ "/" + database + ".trn";
+                String logDatabase = Program.strDefaultPath +"/"+Program.servername+ "/" + devicename + ".bak";
                 strRestore += "\n" + "BACKUP LOG " + database + " TO DISK =" + "'" + logPath + "'" + " WITH INIT"
                     + "\n" + " RESTORE DATABASE " + database + " FROM DISK = '" + logDatabase + "' WITH NORECOVERY,REPLACE"
                     + "\n" + " RESTORE DATABASE " + database + " FROM DISK = '" + logPath + "' WITH STOPAT='"+strThoiDiemStop+"'"

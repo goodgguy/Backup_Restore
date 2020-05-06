@@ -29,6 +29,7 @@ namespace BackupRestore
         public static int nambatdau = 2016;
         public static int flagRestore=0;
         public static String strDefaultPath = "D:/Đại Cương/Chuyên Đề Công Nghệ Phần Mềm/BackUpReStoreProject/Backup_Restore_DB";
+        public static String severnameFix = "";
         [STAThread]
         public static int KetNoi()
         {
